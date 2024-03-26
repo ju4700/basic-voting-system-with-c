@@ -1,0 +1,59 @@
+#include <SDL.h>
+
+void drawGrid(SDL_Renderer *renderer, int rows, int cols, int cellSize) {
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+    for (int i = 1; i < cols; ++i) {
+        SDL_RenderDrawLine(renderer, i * cellSize, 0, i * cellSize, rows * cellSize);
+    }
+
+    for (int i = 1; i < rows; ++i) {
+        SDL_RenderDrawLine(renderer, 0, i * cellSize, cols * cellSize, i * cellSize);
+    }
+}
+
+int main(int argc, char *argv[]) {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+        printf("SDL initialization failed: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    SDL_Window *window = SDL_CreateWindow("3x3 Grid", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 800, SDL_WINDOW_SHOWN);
+    if (!window) {
+        printf("Window creation failed: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer) {
+        printf("Renderer creation failed: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    int rows = 3;
+    int cols = 3;
+    int cellSize = 267;
+
+    int quit = 0;
+    SDL_Event event;
+    while (!quit) {
+        while (SDL_PollEvent(&event) != 0) {
+            if (event.type == SDL_QUIT) {
+                quit = 1;
+            }
+        }
+
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+
+        drawGrid(renderer, rows, cols, cellSize);
+
+        SDL_RenderPresent(renderer);
+    }
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+
+    return 0;
+}

@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1702375344 source:/home/j47/Documents/C/STic/STic/main.c
+	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+
+1702375344 source:/home/j47/Documents/C/EVS-4700/STic/main.c
+	<SDL2/SDL.h>
+	<SDL2/SDL_ttf.h>
+
